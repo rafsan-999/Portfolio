@@ -1,18 +1,21 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { IconType } from "react-icons";
 
 import {
   FiActivity,
   FiArrowRight,
   FiBriefcase,
+  FiCheck,
   FiCheckCircle,
+  FiChevronDown,
   FiCloud,
   FiCode,
   FiDatabase,
   FiDownload,
+  FiDroplet,
   FiExternalLink,
   FiGitBranch,
   FiGithub,
@@ -21,13 +24,32 @@ import {
   FiMail,
   FiMapPin,
   FiMenu,
+  FiMonitor,
+  FiMoon,
   FiServer,
   FiSettings,
   FiShield,
+  FiSun,
   FiTerminal,
   FiTool,
   FiX,
+  FiZap,
 } from "react-icons/fi";
+
+
+type Theme = "dark" | "light" | "ocean" | "purple" | "system";
+
+const themes: Array<{
+  value: Theme;
+  label: string;
+  icon: IconType;
+}> = [
+  { value: "dark", label: "Dark", icon: FiMoon },
+  { value: "light", label: "Light", icon: FiSun },
+  { value: "ocean", label: "Ocean", icon: FiDroplet },
+  { value: "purple", label: "Purple", icon: FiZap },
+  { value: "system", label: "System", icon: FiMonitor },
+];
 
 const profile = {
   name: "MD. RAFSAN JAMIL",
@@ -64,7 +86,7 @@ const capabilities: Array<{
   {
     title: "Platform Engineering",
     description:
-      "Building reliable Kubernetes and Docker platforms for development, staging and production workloads.",
+      "Building reliable Kubernetes and Docker platforms for Development, UAT and Production Grade workloads.",
     icon: FiLayers,
   },
   {
@@ -214,30 +236,55 @@ const experience = [
     period: "Present",
     role: "DevOps & Cloud Engineer",
     company: "AKIJ iBOS",
-    summary:
-      "Supporting production infrastructure, software delivery automation, Kubernetes platforms and monitoring systems.",
     responsibilities: [
-      "Manage Kubernetes workloads across development, staging and production environments.",
-      "Build and maintain Azure DevOps, GitLab and GitHub-based CI/CD pipelines.",
-      "Containerise applications using Docker and production-focused build practices.",
-      "Configure reverse proxies, ingress controllers, DNS and TLS certificates.",
-      "Investigate deployment, networking, database and application incidents.",
-      "Support observability, backups, infrastructure automation and DevSecOps initiatives.",
+      "Manage Kubernetes workloads across Development, UAT, and Production Grade environments in on-premises clusters, Azure Kubernetes Service (AKS), and Amazon Elastic Kubernetes Service (EKS).",
+      "Manage and support secure, scalable, and highly available On-prem + Cloud infrastructure across Microsoft Azure, AWS, and Oracle Cloud Infrastructure (OCI)",
+      "Build and maintain CI/CD pipelines using Azure DevOps, Argo CD and GitHub Action.",
+      "Containerise applications using Docker, multi-stage builds, image optimisation, vulnerability scanning, and production-focused build practices.",
+      "Configure and maintain NGINX & Apache reverse proxies, Kubernetes ingress controllers, Gateway API, load balancers, DNS records, and TLS/SSL certificates.",
+      "Investigate and resolve deployment, networking, Kubernetes, cloud infrastructure, database, and application-level incidents.",
+      "Optimise MSSQL, PostgreSQL, and MySQL, databases through resource tuning, connection management, and performance monitoring",
+      "Design and maintain automated database backup processes, including backup validation, automated backups with scheduled retention policies,.",
+      "For Monitoring Logging I used Prometheus, Grafana, Elasticsearch, and Kibana for application monitoring, metrics visualisation, centralised log management, and incident analysis.",
+      "Played a key role in ISO/IEC 27001 ISMS implementation and the successful Year-1 surveillance audit across Kubernetes, Azure cloud services, NGINX Ingress, and on-premises infrastructure",
     ],
   },
 ];
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState<Theme>("dark");
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = window.localStorage.getItem("portfolio-theme") as Theme | null;
+
+    if (savedTheme && themes.some((item) => item.value === savedTheme)) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  const changeTheme = (nextTheme: Theme) => {
+    setTheme(nextTheme);
+    setThemeMenuOpen(false);
+    window.localStorage.setItem("portfolio-theme", nextTheme);
+  };
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
+    <main
+      data-theme={theme}
+      className="portfolio-theme min-h-screen overflow-x-hidden"
+    >
       <div className="fixed inset-x-0 top-0 z-[70] h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500" />
 
       <Header
         open={mobileMenuOpen}
         onToggle={() => setMobileMenuOpen((current) => !current)}
         onClose={() => setMobileMenuOpen(false)}
+        theme={theme}
+        onThemeChange={changeTheme}
+        themeMenuOpen={themeMenuOpen}
+        setThemeMenuOpen={setThemeMenuOpen}
       />
 
       <Hero />
@@ -256,13 +303,21 @@ function Header({
   open,
   onToggle,
   onClose,
+  theme,
+  onThemeChange,
+  themeMenuOpen,
+  setThemeMenuOpen,
 }: {
   open: boolean;
   onToggle: () => void;
   onClose: () => void;
+  theme: Theme;
+  onThemeChange: (theme: Theme) => void;
+  themeMenuOpen: boolean;
+  setThemeMenuOpen: (open: boolean) => void;
 }) {
   return (
-    <header className="fixed inset-x-0 top-1 z-50 border-b border-white/10 bg-slate-950/85 backdrop-blur-xl">
+    <header className="theme-header fixed inset-x-0 top-1 z-50 border-b backdrop-blur-xl">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6">
 <a
   href="#home"
@@ -290,7 +345,7 @@ function Header({
             <a
               key={item.href}
               href={item.href}
-              className="text-sm text-slate-300 transition hover:text-cyan-400"
+              className="theme-nav-link text-sm transition"
             >
               {item.label}
             </a>
@@ -301,6 +356,12 @@ function Header({
           >
             Contact
           </a>
+          <ThemeSelector
+            theme={theme}
+            onThemeChange={onThemeChange}
+            open={themeMenuOpen}
+            setOpen={setThemeMenuOpen}
+          />
         </div>
 
         <button
@@ -334,6 +395,15 @@ function Header({
             >
               Contact me
             </a>
+            <div className="mt-2">
+              <ThemeSelector
+                theme={theme}
+                onThemeChange={onThemeChange}
+                open={themeMenuOpen}
+                setOpen={setThemeMenuOpen}
+                mobile
+              />
+            </div>
           </div>
         </div>
       )}
@@ -341,102 +411,138 @@ function Header({
   );
 }
 
+
+function ThemeSelector({
+  theme,
+  onThemeChange,
+  open,
+  setOpen,
+  mobile = false,
+}: {
+  theme: Theme;
+  onThemeChange: (theme: Theme) => void;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  mobile?: boolean;
+}) {
+  const selectedTheme =
+    themes.find((item) => item.value === theme) ?? themes[0];
+  const SelectedIcon = selectedTheme.icon;
+
+  return (
+    <div className={`relative ${mobile ? "w-full" : ""}`}>
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        aria-label="Select website theme"
+        aria-expanded={open}
+        className={`theme-control inline-flex h-10 items-center justify-center gap-2 rounded-xl border px-3 text-sm transition hover:-translate-y-0.5 ${
+          mobile ? "w-full" : ""
+        }`}
+      >
+        <SelectedIcon size={17} />
+        <span>{selectedTheme.label}</span>
+        <FiChevronDown
+          size={15}
+          className={`transition ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {open && (
+        <div
+          className={`theme-menu z-[80] w-44 overflow-hidden rounded-xl border p-1.5 shadow-2xl ${
+            mobile
+              ? "mt-2 w-full"
+              : "absolute right-0 top-12"
+          }`}
+        >
+          {themes.map((item) => {
+            const Icon = item.icon;
+            const selected = theme === item.value;
+
+            return (
+              <button
+                key={item.value}
+                type="button"
+                onClick={() => onThemeChange(item.value)}
+                className="theme-menu-item flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm transition"
+              >
+                <span className="flex items-center gap-3">
+                  <Icon size={17} />
+                  {item.label}
+                </span>
+                {selected && <FiCheck size={16} />}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen scroll-mt-24 items-center overflow-hidden px-5 pb-20 pt-32 sm:px-6"
+      className="relative min-h-screen scroll-mt-24 overflow-hidden px-5 pb-24 pt-36 sm:px-6"
     >
-      <div className="page-grid absolute inset-0 opacity-70" />
+      <div className="page-grid absolute inset-0 opacity-40" />
 
-      <div className="absolute -left-40 top-20 h-[440px] w-[440px] rounded-full bg-cyan-500/10 blur-[130px]" />
+      <div className="absolute left-[8%] top-[20%] h-72 w-72 rounded-full bg-cyan-500/10 blur-[130px]" />
+      <div className="absolute bottom-[5%] right-[8%] h-96 w-96 rounded-full bg-violet-500/10 blur-[150px]" />
 
-      <div className="absolute -right-40 bottom-0 h-[480px] w-[480px] rounded-full bg-blue-600/10 blur-[140px]" />
+      <div className="relative mx-auto grid min-h-[760px] max-w-7xl items-center gap-16 lg:grid-cols-[0.88fr_1.12fr]">
+        {/* Left content */}
+        <div className="relative z-20 animate-rise">
+          <div className="mb-7 inline-flex items-center gap-3 rounded-full border border-cyan-400/25 bg-cyan-400/[0.08] px-4 py-2 text-sm text-cyan-400 backdrop-blur-xl">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
+            </span>
 
-      <div className="relative mx-auto grid w-full max-w-7xl items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="animate-rise">
-          {/* Profile information */}
-          <div className="mb-8 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-            <div className="group relative">
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 opacity-60 blur-md transition duration-300 group-hover:opacity-100" />
-
-              <div className="relative h-28 w-28 overflow-hidden rounded-full border-2 border-cyan-400/60 bg-slate-400 shadow-2xl shadow-cyan-950/60 sm:h-32 sm:w-32">
-                <Image
-                  src={profile.image}
-                  alt={`${profile.name} profile picture`}
-                  fill
-                  priority
-                  sizes="(max-width: 640px) 112px, 128px"
-                  className="object-cover object-center transition duration-500 group-hover:scale-105"
-                />
-              </div>
-
-              <span className="absolute bottom-2 right-2 h-5 w-5 rounded-full border-4 border-slate-950 bg-emerald-400" />
-            </div>
-
-            <div>
-              <p className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                {profile.name}
-              </p>
-
-              <p className="mt-1 text-sm text-slate-400">
-                {profile.role}
-              </p>
-
-              <div className="mt-3 inline-flex items-center gap-3 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-200">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
-                </span>
-
-                Available for DevOps & Cloud Opportunities
-              </div>
-            </div>
+            Available for DevOps & Cloud opportunities
           </div>
 
-          {/* Role label */}
-          <p className="font-mono text-sm uppercase tracking-[0.32em] text-cyan-400">
+          <p className="font-mono text-xs uppercase tracking-[0.38em] text-cyan-400 sm:text-sm">
             DevOps • Cloud • SRE
           </p>
 
-          {/* Main heading */}
-          <h1 className="mt-5 text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-            I Build Secure
-
-            <span className="mt-2 block bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 bg-clip-text text-transparent">
-              & Highly Available Cloud Platforms.
+          <h1 className="mt-6 max-w-3xl text-5xl font-black leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+            I engineer the systems
+            <span className="mt-2 block bg-gradient-to-r from-cyan-400 via-blue-400 to-violet-500 bg-clip-text text-transparent">
+              behind reliable products.
             </span>
           </h1>
 
-          {/* Introduction */}
-          <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-400">
-            I automate software delivery, operate Kubernetes environments and
-            improve production reliability with Docker, cloud infrastructure,
-            monitoring and DevSecOps practices.
+          <p className="mt-7 max-w-xl text-lg leading-8 text-[var(--muted)]">
+            I build Kubernetes platforms, automate delivery pipelines and
+            operate secure cloud infrastructure across Azure, AWS, OCI and
+            on-premises environments.
           </p>
 
-          {/* Buttons */}
           <div className="mt-9 flex flex-wrap gap-4">
             <a
               href="#projects"
-              className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-6 py-3.5 font-semibold text-slate-950 transition hover:-translate-y-1 hover:bg-cyan-300"
+              className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3.5 font-semibold text-slate-950 shadow-[0_12px_40px_rgba(34,211,238,0.2)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_55px_rgba(34,211,238,0.3)]"
             >
-              Explore projects
-              <FiArrowRight size={18} />
+              Explore my infrastructure
+              <FiArrowRight
+                size={18}
+                className="transition group-hover:translate-x-1"
+              />
             </a>
 
             <a
               href={profile.resume}
               download
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.03] px-6 py-3.5 font-semibold transition hover:-translate-y-1 hover:border-cyan-400 hover:text-cyan-400"
+              className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-6 py-3.5 font-semibold backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:text-cyan-400"
             >
               <FiDownload size={18} />
-              Download Resume
+              Resume
             </a>
           </div>
 
-          {/* Social links */}
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <SocialLink href={profile.github} label="GitHub">
               <FiGithub size={20} />
@@ -454,16 +560,209 @@ function Hero() {
               <FiMail size={20} />
             </SocialLink>
 
-            <span className="ml-1 inline-flex items-center gap-2 text-sm text-slate-500">
+            <span className="ml-1 inline-flex items-center gap-2 text-sm text-[var(--muted)]">
               <FiMapPin size={17} />
               {profile.location}
             </span>
           </div>
         </div>
 
-        <TerminalPanel />
+        {/* Right architecture visual */}
+        <InfrastructureOrbit />
       </div>
+
+      <DeploymentTicker />
     </section>
+  );
+}
+function InfrastructureOrbit() {
+  return (
+    <div className="relative mx-auto h-[560px] w-full max-w-[620px] animate-rise-delayed sm:h-[620px]">
+      {/* Background illumination */}
+      <div className="absolute left-1/2 top-1/2 h-[430px] w-[430px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.07] blur-[90px]" />
+
+      {/* Outer orbit */}
+      <div className="orbit-slow absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/15 sm:h-[560px] sm:w-[560px]">
+        <OrbitNode
+          className="-left-5 top-[42%]"
+          icon={FiLayers}
+          label="Kubernetes"
+          accent="cyan"
+        />
+
+        <OrbitNode
+          className="right-[3%] top-[9%]"
+          icon={FiCloud}
+          label="Cloud"
+          accent="blue"
+        />
+
+        <OrbitNode
+          className="bottom-[4%] right-[11%]"
+          icon={FiActivity}
+          label="Observability"
+          accent="emerald"
+        />
+      </div>
+
+      {/* Middle orbit */}
+      <div className="orbit-reverse absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-400/20 sm:h-[410px] sm:w-[410px]">
+        <OrbitNode
+          className="-right-8 top-[38%]"
+          icon={FiGitBranch}
+          label="CI/CD"
+          accent="violet"
+        />
+
+        <OrbitNode
+          className="bottom-[4%] left-[8%]"
+          icon={FiShield}
+          label="DevSecOps"
+          accent="orange"
+        />
+
+        <OrbitNode
+          className="left-[2%] top-[5%]"
+          icon={FiServer}
+          label="Infrastructure"
+          accent="cyan"
+        />
+      </div>
+
+      {/* Connecting rays */}
+      <div className="absolute left-1/2 top-1/2 h-px w-[75%] -translate-x-1/2 rotate-[25deg] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
+      <div className="absolute left-1/2 top-1/2 h-px w-[70%] -translate-x-1/2 -rotate-[35deg] bg-gradient-to-r from-transparent via-blue-400/20 to-transparent" />
+      <div className="absolute left-1/2 top-1/2 h-px w-[72%] -translate-x-1/2 rotate-[90deg] bg-gradient-to-r from-transparent via-violet-400/20 to-transparent" />
+
+      {/* Central profile node */}
+      <div className="absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute -inset-10 rounded-full bg-cyan-400/10 blur-2xl" />
+        <div className="absolute -inset-5 animate-pulse rounded-full border border-cyan-400/25" />
+
+        <div className="relative w-[210px] overflow-hidden rounded-[2rem] border border-cyan-400/30 bg-[var(--surface)]/90 p-5 text-center shadow-[0_35px_100px_rgba(8,145,178,0.2)] backdrop-blur-2xl">
+          <div className="relative mx-auto h-24 w-24">
+            <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 opacity-60 blur-md" />
+
+            <div className="relative h-24 w-24 overflow-hidden rounded-full border-2 border-cyan-400/50">
+              <Image
+                src={profile.image}
+                alt={profile.name}
+                fill
+                priority
+                sizes="96px"
+                className="object-cover"
+              />
+            </div>
+
+            <span className="absolute bottom-0 right-0 h-5 w-5 rounded-full border-4 border-[var(--surface)] bg-emerald-400" />
+          </div>
+
+          <p className="mt-4 text-base font-bold">{profile.name}</p>
+          <p className="mt-1 text-xs text-[var(--muted)]">
+            DevOps & Cloud Engineer
+          </p>
+
+          <div className="mt-4 flex items-center justify-center gap-2 rounded-xl border border-emerald-400/15 bg-emerald-400/[0.06] py-2 text-xs text-emerald-400">
+            <FiCheckCircle size={14} />
+            Systems operational
+          </div>
+        </div>
+      </div>
+
+      {/* Floating metrics */}
+      <FloatingMetric
+        className="left-0 top-[6%]"
+        value="6+"
+        label="Production clusters"
+      />
+
+      <FloatingMetric
+        className="bottom-[5%] left-[2%]"
+        value="300+"
+        label="Applications"
+      />
+
+      <FloatingMetric
+        className="right-0 top-[48%]"
+        value="99.9%"
+        label="Reliability"
+      />
+    </div>
+  );
+}
+function OrbitNode({
+  className,
+  icon: Icon,
+  label,
+  accent,
+}: {
+  className: string;
+  icon: IconType;
+  label: string;
+  accent: "cyan" | "blue" | "emerald" | "violet" | "orange";
+}) {
+  const accents = {
+    cyan: "border-cyan-400/30 bg-cyan-400/10 text-cyan-400",
+    blue: "border-blue-400/30 bg-blue-400/10 text-blue-400",
+    emerald: "border-emerald-400/30 bg-emerald-400/10 text-emerald-400",
+    violet: "border-violet-400/30 bg-violet-400/10 text-violet-400",
+    orange: "border-orange-400/30 bg-orange-400/10 text-orange-400",
+  };
+
+  return (
+    <div
+      className={`absolute ${className} flex items-center gap-2 rounded-xl border px-3 py-2 shadow-xl backdrop-blur-xl ${accents[accent]}`}
+    >
+      <Icon size={17} />
+      <span className="text-xs font-semibold">{label}</span>
+    </div>
+  );
+}
+
+function FloatingMetric({
+  className,
+  value,
+  label,
+}: {
+  className: string;
+  value: string;
+  label: string;
+}) {
+  return (
+    <div
+      className={`absolute z-40 ${className} rounded-2xl border border-[var(--border)] bg-[var(--surface)]/85 px-4 py-3 shadow-2xl backdrop-blur-xl`}
+    >
+      <p className="text-lg font-bold text-cyan-400">{value}</p>
+      <p className="mt-0.5 text-[10px] uppercase tracking-wider text-[var(--muted)]">
+        {label}
+      </p>
+    </div>
+  );
+}
+
+function DeploymentTicker() {
+  const entries = [
+    "AKS production healthy",
+    "Docker images scanned",
+    "Terraform state synchronized",
+    "Database backups verified",
+    "CI/CD deployment successful",
+  ];
+
+  return (
+    <div className="relative mx-auto mt-10 max-w-7xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] backdrop-blur-xl">
+      <div className="flex min-w-max animate-ticker items-center">
+        {[...entries, ...entries].map((entry, index) => (
+          <div
+            key={`${entry}-${index}`}
+            className="flex items-center gap-3 border-r border-[var(--border)] px-7 py-3 text-xs text-[var(--muted)]"
+          >
+            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
+            {entry}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 function SocialLink({
@@ -589,7 +888,7 @@ function About() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="About me"
-          title="DEVOPS & CLOUD ENGINEER"
+          title="DevOps & Cloud Engineer"
           description="Hi, This is Md. Rafsan Jamil, I am a DevOps and Cloud Engineer with 3+ years of experience building secure, scalable, reliable, and highly available infrastructure across cloud and on-premises environments.I have managed and configured up to six production Azure Kubernetes Service clusters, supporting more than 300 applications. My expertise includes Kubernetes, Docker, CI/CD automation, Terraform, Linux, monitoring, and cloud platforms such as AWS, Azure, and OCI.I focus on automating deployments, improving system reliability, strengthening infrastructure security, and building resilient platforms that scale with business needs."
         />
 
@@ -600,14 +899,16 @@ function About() {
             </div>
             <h3 className="mt-6 text-2xl font-bold">How I work</h3>
             <p className="mt-5 leading-8 text-slate-400">
-              I focus on reducing manual operations, improving deployment consistency and giving teams clear visibility into the health of their systems.
+              I focus on building secure, reliable, and scalable infrastructure that reduces manual effort, improves deployment consistency, and gives teams clear visibility into system health.
             </p>
             <div className="mt-8 space-y-4">
               {[
-                "Automate repeatable operational work",
-                "Build secure and controlled delivery workflows",
-                "Design for visibility, recovery and scale",
-                "Document infrastructure so teams can operate it",
+                "Manage multiple production-grade AKS clusters",
+                "Build secure, controlled, & repeatable CI/CD workflows",
+                "Automate repetitive tasks to reduce errors & improve efficiency",
+                "Design systems for observability, high availability, and scalability",
+                "Document clearly for confident operations and troubleshooting.",
+                "Continuously improve system performance, security, reliability",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3">
                   <FiCheckCircle className="shrink-0 text-cyan-400" size={18} />
@@ -692,7 +993,7 @@ function Projects() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Featured work"
-          title="DevOps projects and case studies"
+          title="DevOps Projects and Case Studies"
           description="Selected work demonstrating practical experience in Kubernetes, CI/CD, multi-cluster operations, monitoring and security."
         />
 
@@ -725,11 +1026,11 @@ function Projects() {
                     ))}
                   </div>
 
-                  <div className="mt-7 flex flex-wrap gap-2">
+                  <div className="mt-7 flex flex-wrap gap-2.5">
                     {project.stack.map((item) => (
                       <span
                         key={item}
-                        className="rounded-md bg-cyan-400/[0.07] px-3 py-1.5 text-xs text-cyan-200"
+                        className="rounded-lg border border-white/10 bg-white/[0.035] px-3 py-2 text-sm text-slate-300"
                       >
                         {item}
                       </span>
@@ -766,7 +1067,7 @@ function Experience() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Professional journey"
-          title="Experience"
+          title="3+ Years of Experience"
           description="DevOps & Cloud Engineer with 3+ years of experience building secure, scalable, and highly available infrastructure across cloud and on-premises environments. Skilled in Docker, Kubernetes, CI/CD automation, and Terraform, with hands-on expertise in AWS, Azure, and OCI. Contributed to ISO/IEC 27001:2022 ISMS implementation and surveillance audits by aligning cloud, Kubernetes, and infrastructure security controls with compliance requirements."
         />
 
@@ -774,27 +1075,39 @@ function Experience() {
           {experience.map((item) => (
             <article
               key={`${item.role}-${item.company}`}
-              className="grid gap-8 rounded-3xl border border-white/10 bg-slate-950/70 p-8 lg:grid-cols-[0.75fr_1.25fr] lg:p-10"
+              className="grid items-start gap-8 rounded-3xl border border-white/10 bg-slate-950/70 p-8 lg:grid-cols-[0.75fr_1.25fr] lg:p-10"
             >
-              <div>
+              <div className="self-start">
                 <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-400">
                   <FiBriefcase size={24} />
                 </span>
-                <p className="mt-6 font-mono text-sm text-cyan-400">{item.period}</p>
-                <h3 className="mt-3 text-2xl font-bold">{item.role}</h3>
-                <p className="mt-2 text-slate-400">{item.company}</p>
+
+                <p className="mt-6 font-mono text-sm text-cyan-400">
+                  {item.period}
+                </p>
+
+                <h3 className="mt-3 text-2xl font-bold">
+                  {item.role}
+                </h3>
+
+                <p className="mt-2 text-slate-400">
+                  {item.company}
+                </p>
               </div>
 
-              <div>
-                <p className="leading-8 text-slate-400">{item.summary}</p>
-                <div className="mt-7 space-y-4">
-                  {item.responsibilities.map((responsibility) => (
-                    <div key={responsibility} className="flex items-start gap-3">
-                      <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />
-                      <p className="leading-7 text-slate-300">{responsibility}</p>
-                    </div>
-                  ))}
-                </div>
+              <div className="space-y-4">
+                {item.responsibilities.map((responsibility) => (
+                  <div
+                    key={responsibility}
+                    className="flex items-start gap-3"
+                  >
+                    <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />
+
+                    <p className="leading-7 text-slate-300">
+                      {responsibility}
+                    </p>
+                  </div>
+                ))}
               </div>
             </article>
           ))}

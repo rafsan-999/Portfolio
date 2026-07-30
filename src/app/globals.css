@@ -88,3 +88,240 @@ button {
     animation: none;
   }
 }
+
+
+/* Add this below @import "tailwindcss"; in src/app/globals.css */
+
+.portfolio-theme {
+  --page-background: #020617;
+  --page-foreground: #f8fafc;
+  --surface: #071022;
+  --surface-soft: rgba(15, 23, 42, 0.86);
+  --border: rgba(255, 255, 255, 0.1);
+  --muted: #94a3b8;
+  --accent: #22d3ee;
+  --accent-soft: rgba(34, 211, 238, 0.12);
+
+  min-height: 100vh;
+  background: var(--page-background);
+  color: var(--page-foreground);
+  transition:
+    background-color 300ms ease,
+    color 300ms ease;
+}
+
+.portfolio-theme[data-theme="light"] {
+  --page-background: #f8fafc;
+  --page-foreground: #0f172a;
+  --surface: #ffffff;
+  --surface-soft: rgba(255, 255, 255, 0.92);
+  --border: rgba(15, 23, 42, 0.14);
+  --muted: #475569;
+  --accent: #0891b2;
+  --accent-soft: rgba(8, 145, 178, 0.12);
+}
+
+.portfolio-theme[data-theme="ocean"] {
+  --page-background: #031b2d;
+  --page-foreground: #ecfeff;
+  --surface: #06263d;
+  --surface-soft: rgba(6, 38, 61, 0.9);
+  --border: rgba(103, 232, 249, 0.2);
+  --muted: #9bd8e6;
+  --accent: #22d3ee;
+  --accent-soft: rgba(34, 211, 238, 0.14);
+}
+
+.portfolio-theme[data-theme="purple"] {
+  --page-background: #10091f;
+  --page-foreground: #faf5ff;
+  --surface: #1d1033;
+  --surface-soft: rgba(29, 16, 51, 0.9);
+  --border: rgba(216, 180, 254, 0.18);
+  --muted: #c4b5fd;
+  --accent: #c084fc;
+  --accent-soft: rgba(192, 132, 252, 0.14);
+}
+
+@media (prefers-color-scheme: light) {
+  .portfolio-theme[data-theme="system"] {
+    --page-background: #f8fafc;
+    --page-foreground: #0f172a;
+    --surface: #ffffff;
+    --surface-soft: rgba(255, 255, 255, 0.92);
+    --border: rgba(15, 23, 42, 0.14);
+    --muted: #475569;
+    --accent: #0891b2;
+    --accent-soft: rgba(8, 145, 178, 0.12);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .portfolio-theme[data-theme="system"] {
+    --page-background: #020617;
+    --page-foreground: #f8fafc;
+    --surface: #071022;
+    --surface-soft: rgba(15, 23, 42, 0.86);
+    --border: rgba(255, 255, 255, 0.1);
+    --muted: #94a3b8;
+    --accent: #22d3ee;
+    --accent-soft: rgba(34, 211, 238, 0.12);
+  }
+}
+
+.theme-header {
+  color: var(--page-foreground);
+  border-color: var(--border);
+  background: var(--surface-soft);
+}
+
+.theme-nav-link {
+  color: var(--muted);
+}
+
+.theme-nav-link:hover {
+  color: var(--accent);
+}
+
+.theme-control {
+  color: var(--page-foreground);
+  border-color: var(--border);
+  background: var(--surface-soft);
+}
+
+.theme-control:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.theme-menu {
+  color: var(--page-foreground);
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+.theme-menu-item {
+  color: var(--muted);
+}
+
+.theme-menu-item:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* Light-mode readability overrides for the existing dark Tailwind cards */
+.portfolio-theme[data-theme="light"] .bg-slate-950\/70,
+.portfolio-theme[data-theme="light"] .bg-slate-900\/55,
+.portfolio-theme[data-theme="light"] .bg-slate-900\/90,
+.portfolio-theme[data-theme="light"] .bg-slate-900\/95,
+.portfolio-theme[data-theme="light"] .bg-white\/\[0\.025\],
+.portfolio-theme[data-theme="light"] .bg-white\/\[0\.02\],
+.portfolio-theme[data-theme="light"] .bg-white\/\[0\.03\],
+.portfolio-theme[data-theme="light"] .bg-white\/\[0\.035\] {
+  background: rgba(255, 255, 255, 0.88) !important;
+}
+
+.portfolio-theme[data-theme="light"] .text-white,
+.portfolio-theme[data-theme="light"] .text-slate-100,
+.portfolio-theme[data-theme="light"] .text-slate-300 {
+  color: #0f172a !important;
+}
+
+.portfolio-theme[data-theme="light"] .text-slate-400,
+.portfolio-theme[data-theme="light"] .text-slate-500,
+.portfolio-theme[data-theme="light"] .text-slate-600 {
+  color: #475569 !important;
+}
+
+.portfolio-theme[data-theme="light"] .border-white\/10,
+.portfolio-theme[data-theme="light"] .border-white\/15 {
+  border-color: rgba(15, 23, 42, 0.14) !important;
+}
+
+.theme-tag {
+  color: #a5f3fc;
+  background: rgba(34, 211, 238, 0.07);
+  border-color: rgba(34, 211, 238, 0.12);
+}
+
+.portfolio-theme[data-theme="light"] .theme-tag {
+  color: #0e7490;
+  background: #ecfeff;
+  border-color: #a5f3fc;
+}
+
+.portfolio-theme[data-theme="ocean"] .theme-tag {
+  color: #cffafe;
+  background: rgba(34, 211, 238, 0.12);
+  border-color: rgba(103, 232, 249, 0.25);
+}
+
+.portfolio-theme[data-theme="purple"] .theme-tag {
+  color: #e9d5ff;
+  background: rgba(192, 132, 252, 0.12);
+  border-color: rgba(216, 180, 254, 0.22);
+}
+.orbit-slow {
+  animation: orbit-rotate 34s linear infinite;
+}
+
+.orbit-reverse {
+  animation: orbit-rotate-reverse 27s linear infinite;
+}
+
+.orbit-slow > *,
+.orbit-reverse > * {
+  animation: orbit-counter 34s linear infinite;
+}
+
+.animate-ticker {
+  animation: ticker-scroll 28s linear infinite;
+}
+
+@keyframes orbit-rotate {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes orbit-rotate-reverse {
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@keyframes orbit-counter {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 640px) {
+  .orbit-slow {
+    transform: translate(-50%, -50%) scale(0.78);
+  }
+
+  .orbit-reverse {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-slow,
+  .orbit-reverse,
+  .orbit-slow > *,
+  .orbit-reverse > *,
+  .animate-ticker {
+    animation: none;
+  }
+}
