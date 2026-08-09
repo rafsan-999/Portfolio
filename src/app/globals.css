@@ -315,7 +315,6 @@ button {
     transform: translate(-50%, -50%) scale(0.8);
   }
 }
-
 @media (prefers-reduced-motion: reduce) {
   .orbit-slow,
   .orbit-reverse,
