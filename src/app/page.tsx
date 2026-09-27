@@ -54,7 +54,7 @@ const themes: Array<{
 const profile = {
   name: "MD. RAFSAN JAMIL",
   initials: "RJ",
-  image: "/profile.jpg",
+  image: "/profile.png",
   role: "DevOps & Cloud Engineer || Contributed to ISO/IEC 27001-aligned ISMS implementation",
   location: "Dhaka, Bangladesh",
   email: "mdrafsan.shah@gmail.com",
@@ -485,7 +485,7 @@ function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen scroll-mt-24 overflow-hidden px-5 pb-24 pt-36 sm:px-6"
+      className="relative min-h-screen scroll-mt-24 overflow-hidden px-5 pb-24 pt-[86px] sm:px-6"
     >
       <div className="page-grid absolute inset-0 opacity-40" />
 
@@ -494,7 +494,7 @@ function Hero() {
 
       <div className="relative mx-auto grid min-h-[760px] max-w-7xl items-center gap-16 lg:grid-cols-[0.88fr_1.12fr]">
         {/* Left content */}
-        <div className="relative z-20 animate-rise">
+        <div className="relative z-20 animate-rise lg:-mt-14">
           <div className="mb-7 inline-flex items-center gap-3 rounded-full border border-cyan-400/25 bg-cyan-400/[0.08] px-4 py-2 text-sm text-cyan-400 backdrop-blur-xl">
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
@@ -508,14 +508,14 @@ function Hero() {
             DevOps • Cloud • SRE
           </p>
 
-          <h1 className="mt-6 max-w-3xl text-5xl font-black leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
-            I engineer the systems
+          <h1 className="mt-6 max-w-3xl text-2xl font-black leading-tight tracking-tight">
+            I Engineer The Systems
             <span className="mt-2 block bg-gradient-to-r from-cyan-400 via-blue-400 to-violet-500 bg-clip-text text-transparent">
-              behind reliable products.
+              Behind Reliable Products.
             </span>
           </h1>
 
-          <p className="mt-7 max-w-xl text-lg leading-8 text-[var(--muted)]">
+          <p className="mt-7 max-w-3xl text-lg leading-8 text-[var(--muted)]">
             I build Kubernetes platforms, automate delivery pipelines and
             operate secure cloud infrastructure across Azure, AWS, OCI and
             on-premises environments.
@@ -577,12 +577,12 @@ function Hero() {
 }
 function InfrastructureOrbit() {
   return (
-    <div className="relative mx-auto h-[560px] w-full max-w-[620px] animate-rise-delayed sm:h-[620px]">
+    <div className="relative mx-auto -mt-14 h-[440px] w-full max-w-[480px] animate-rise-delayed sm:h-[480px] lg:-mt-52">
       {/* Background illumination */}
-      <div className="absolute left-1/2 top-1/2 h-[430px] w-[430px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.07] blur-[90px]" />
+      <div className="absolute left-1/2 top-1/2 h-[335px] w-[335px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.07] blur-[90px]" />
 
       {/* Outer orbit */}
-      <div className="orbit-slow absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/15 sm:h-[560px] sm:w-[560px]">
+      <div className="orbit-slow absolute left-1/2 top-1/2 h-[390px] w-[390px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/15 sm:h-[440px] sm:w-[440px]">
         <OrbitNode
           className="-left-5 top-[42%]"
           icon={FiLayers}
@@ -606,7 +606,7 @@ function InfrastructureOrbit() {
       </div>
 
       {/* Middle orbit */}
-      <div className="orbit-reverse absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-400/20 sm:h-[410px] sm:w-[410px]">
+      <div className="orbit-reverse absolute left-1/2 top-1/2 h-[275px] w-[275px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-400/20 sm:h-[310px] sm:w-[310px]">
         <OrbitNode
           className="-right-8 top-[38%]"
           icon={FiGitBranch}
@@ -635,22 +635,23 @@ function InfrastructureOrbit() {
       <div className="absolute left-1/2 top-1/2 h-px w-[72%] -translate-x-1/2 rotate-[90deg] bg-gradient-to-r from-transparent via-violet-400/20 to-transparent" />
 
       {/* Central profile node */}
-      <div className="absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-[calc(50%+20px)]">
         <div className="absolute -inset-10 rounded-full bg-cyan-400/10 blur-2xl" />
         <div className="absolute -inset-5 animate-pulse rounded-full border border-cyan-400/25" />
 
-        <div className="relative w-[210px] overflow-hidden rounded-[2rem] border border-cyan-400/30 bg-[var(--surface)]/90 p-5 text-center shadow-[0_35px_100px_rgba(8,145,178,0.2)] backdrop-blur-2xl">
-          <div className="relative mx-auto h-24 w-24">
+        <div className="relative w-[230px] overflow-hidden rounded-[2rem] border border-cyan-400/30 bg-[var(--surface)]/90 p-5 text-center shadow-[0_35px_100px_rgba(8,145,178,0.2)] backdrop-blur-2xl">
+          <div className="relative mx-auto h-32 w-32">
             <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 opacity-60 blur-md" />
 
-            <div className="relative h-24 w-24 overflow-hidden rounded-full border-2 border-cyan-400/50">
+            <div className="relative h-32 w-32 overflow-hidden rounded-full border-2 border-cyan-400/50">
               <Image
                 src={profile.image}
                 alt={profile.name}
                 fill
                 priority
-                sizes="96px"
-                className="object-cover"
+                quality={100}
+                sizes="256px"
+                className="object-cover object-top"
               />
             </div>
 

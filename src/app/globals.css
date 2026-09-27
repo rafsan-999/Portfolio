@@ -269,9 +269,12 @@ button {
   animation: orbit-rotate-reverse 27s linear infinite;
 }
 
-.orbit-slow > *,
-.orbit-reverse > * {
+.orbit-slow > * {
   animation: orbit-counter 34s linear infinite;
+}
+
+.orbit-reverse > * {
+  animation: orbit-counter-reverse 27s linear infinite;
 }
 
 .animate-ticker {
@@ -293,6 +296,12 @@ button {
 @keyframes orbit-counter {
   to {
     transform: rotate(-360deg);
+  }
+}
+
+@keyframes orbit-counter-reverse {
+  to {
+    transform: rotate(360deg);
   }
 }
 
