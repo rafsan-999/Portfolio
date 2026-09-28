@@ -706,7 +706,7 @@ function OrbitNode({
 
   return (
     <div
-      className={`absolute ${className} flex items-center gap-2 rounded-xl border px-3 py-2 shadow-xl backdrop-blur-xl ${accents[accent]}`}
+      className={`absolute ${className} hidden items-center gap-2 rounded-xl border px-3 py-2 shadow-xl backdrop-blur-xl sm:flex ${accents[accent]}`}
     >
       <Icon size={17} />
       <span className="text-xs font-semibold">{label}</span>
@@ -725,7 +725,7 @@ function FloatingMetric({
 }) {
   return (
     <div
-      className={`absolute z-40 ${className} rounded-2xl border border-[var(--border)] bg-[var(--surface)]/85 px-4 py-3 shadow-2xl backdrop-blur-xl`}
+      className={`absolute z-40 ${className} hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]/85 px-4 py-3 shadow-2xl backdrop-blur-xl sm:block`}
     >
       <p className="text-lg font-bold text-cyan-400">{value}</p>
       <p className="mt-0.5 text-[10px] uppercase tracking-wider text-[var(--muted)]">
