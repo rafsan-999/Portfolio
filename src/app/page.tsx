@@ -571,117 +571,119 @@ function Hero() {
 }
 function InfrastructureOrbit() {
   return (
-    <div className="relative mx-auto -mt-14 h-[440px] w-full max-w-[480px] animate-rise-delayed sm:h-[480px] lg:-mt-52">
-      {/* Background illumination */}
-      <div className="absolute left-1/2 top-1/2 h-[335px] w-[335px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.07] blur-[90px]" />
+    <div className="relative mx-auto -mt-14 h-[308px] w-full max-w-[480px] animate-rise-delayed sm:h-[480px] lg:-mt-52">
+      <div className="infra-orbit-scale absolute left-[calc(50%-240px)] top-[calc(50%-220px)] h-[440px] w-[480px]">
+        {/* Background illumination */}
+        <div className="absolute left-1/2 top-1/2 h-[335px] w-[335px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.07] blur-[90px]" />
 
-      {/* Outer orbit */}
-      <div className="orbit-slow absolute left-1/2 top-1/2 h-[390px] w-[390px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/15 sm:h-[440px] sm:w-[440px]">
-        <OrbitNode
-          className="-left-5 top-[42%]"
-          icon={FiLayers}
-          label="Kubernetes"
-          accent="cyan"
-        />
+        {/* Outer orbit */}
+        <div className="orbit-slow absolute left-1/2 top-1/2 h-[440px] w-[440px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/15">
+          <OrbitNode
+            className="-left-5 top-[42%]"
+            icon={FiLayers}
+            label="Kubernetes"
+            accent="cyan"
+          />
 
-        <OrbitNode
-          className="right-[3%] top-[9%]"
-          icon={FiCloud}
-          label="Cloud"
-          accent="blue"
-        />
+          <OrbitNode
+            className="right-[3%] top-[9%]"
+            icon={FiCloud}
+            label="Cloud"
+            accent="blue"
+          />
 
-        <OrbitNode
-          className="bottom-[4%] right-[11%]"
-          icon={FiActivity}
-          label="Observability"
-          accent="emerald"
-        />
-      </div>
+          <OrbitNode
+            className="bottom-[4%] right-[11%]"
+            icon={FiActivity}
+            label="Observability"
+            accent="emerald"
+          />
+        </div>
 
-      {/* Middle orbit */}
-      <div className="orbit-reverse absolute left-1/2 top-1/2 h-[275px] w-[275px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-400/20 sm:h-[310px] sm:w-[310px]">
-        <OrbitNode
-          className="-right-8 top-[38%]"
-          icon={FiGitBranch}
-          label="CI/CD"
-          accent="violet"
-        />
+        {/* Middle orbit */}
+        <div className="orbit-reverse absolute left-1/2 top-1/2 h-[310px] w-[310px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-400/20">
+          <OrbitNode
+            className="-right-8 top-[38%]"
+            icon={FiGitBranch}
+            label="CI/CD"
+            accent="violet"
+          />
 
-        <OrbitNode
-          className="bottom-[4%] left-[8%]"
-          icon={FiShield}
-          label="DevSecOps"
-          accent="orange"
-        />
+          <OrbitNode
+            className="bottom-[4%] left-[8%]"
+            icon={FiShield}
+            label="DevSecOps"
+            accent="orange"
+          />
 
-        <OrbitNode
-          className="left-[2%] top-[5%]"
-          icon={FiServer}
-          label="Infrastructure"
-          accent="cyan"
-        />
-      </div>
+          <OrbitNode
+            className="left-[2%] top-[5%]"
+            icon={FiServer}
+            label="Infrastructure"
+            accent="cyan"
+          />
+        </div>
 
-      {/* Connecting rays */}
-      <div className="absolute left-1/2 top-1/2 h-px w-[75%] -translate-x-1/2 rotate-[25deg] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
-      <div className="absolute left-1/2 top-1/2 h-px w-[70%] -translate-x-1/2 -rotate-[35deg] bg-gradient-to-r from-transparent via-blue-400/20 to-transparent" />
-      <div className="absolute left-1/2 top-1/2 h-px w-[72%] -translate-x-1/2 rotate-[90deg] bg-gradient-to-r from-transparent via-violet-400/20 to-transparent" />
+        {/* Connecting rays */}
+        <div className="absolute left-1/2 top-1/2 h-px w-[75%] -translate-x-1/2 rotate-[25deg] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent" />
+        <div className="absolute left-1/2 top-1/2 h-px w-[70%] -translate-x-1/2 -rotate-[35deg] bg-gradient-to-r from-transparent via-blue-400/20 to-transparent" />
+        <div className="absolute left-1/2 top-1/2 h-px w-[72%] -translate-x-1/2 rotate-[90deg] bg-gradient-to-r from-transparent via-violet-400/20 to-transparent" />
 
-      {/* Central profile node */}
-      <div className="absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-[calc(50%+20px)]">
-        <div className="absolute -inset-10 rounded-full bg-cyan-400/10 blur-2xl" />
-        <div className="absolute -inset-5 animate-pulse rounded-full border border-cyan-400/25" />
+        {/* Central profile node */}
+        <div className="absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-[calc(50%+20px)]">
+          <div className="absolute -inset-10 rounded-full bg-cyan-400/10 blur-2xl" />
+          <div className="absolute -inset-5 animate-pulse rounded-full border border-cyan-400/25" />
 
-        <div className="relative w-[230px] overflow-hidden rounded-[2rem] border border-cyan-400/30 bg-[var(--surface)]/90 p-5 text-center shadow-[0_35px_100px_rgba(8,145,178,0.2)] backdrop-blur-2xl">
-          <div className="relative mx-auto h-32 w-32">
-            <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 opacity-60 blur-md" />
+          <div className="relative w-[230px] overflow-hidden rounded-[2rem] border border-cyan-400/30 bg-[var(--surface)]/90 p-5 text-center shadow-[0_35px_100px_rgba(8,145,178,0.2)] backdrop-blur-2xl">
+            <div className="relative mx-auto h-32 w-32">
+              <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 opacity-60 blur-md" />
 
-            <div className="relative h-32 w-32 overflow-hidden rounded-full border-2 border-cyan-400/50">
-              <Image
-                src={profile.image}
-                alt={profile.name}
-                fill
-                priority
-                quality={100}
-                sizes="256px"
-                className="object-cover object-top"
-              />
+              <div className="relative h-32 w-32 overflow-hidden rounded-full border-2 border-cyan-400/50">
+                <Image
+                  src={profile.image}
+                  alt={profile.name}
+                  fill
+                  priority
+                  quality={100}
+                  sizes="256px"
+                  className="object-cover object-top"
+                />
+              </div>
+
+              <span className="absolute bottom-0 right-0 h-5 w-5 rounded-full border-4 border-[var(--surface)] bg-emerald-400" />
             </div>
 
-            <span className="absolute bottom-0 right-0 h-5 w-5 rounded-full border-4 border-[var(--surface)] bg-emerald-400" />
-          </div>
+            <p className="mt-4 text-base font-bold">{profile.name}</p>
+            <p className="mt-1 text-xs text-[var(--muted)]">
+              DevOps & Cloud Engineer
+            </p>
 
-          <p className="mt-4 text-base font-bold">{profile.name}</p>
-          <p className="mt-1 text-xs text-[var(--muted)]">
-            DevOps & Cloud Engineer
-          </p>
-
-          <div className="mt-4 flex items-center justify-center gap-2 rounded-xl border border-emerald-400/15 bg-emerald-400/[0.06] py-2 text-xs text-emerald-400">
-            <FiCheckCircle size={14} />
-            Systems operational
+            <div className="mt-4 flex items-center justify-center gap-2 rounded-xl border border-emerald-400/15 bg-emerald-400/[0.06] py-2 text-xs text-emerald-400">
+              <FiCheckCircle size={14} />
+              Systems operational
+            </div>
           </div>
         </div>
+
+        {/* Floating metrics */}
+        <FloatingMetric
+          className="left-0 top-[6%]"
+          value="6+"
+          label="Production clusters"
+        />
+
+        <FloatingMetric
+          className="bottom-[5%] left-[2%]"
+          value="300+"
+          label="Applications"
+        />
+
+        <FloatingMetric
+          className="right-0 top-[48%]"
+          value="99.9%"
+          label="Reliability"
+        />
       </div>
-
-      {/* Floating metrics */}
-      <FloatingMetric
-        className="left-0 top-[6%]"
-        value="6+"
-        label="Production clusters"
-      />
-
-      <FloatingMetric
-        className="bottom-[5%] left-[2%]"
-        value="300+"
-        label="Applications"
-      />
-
-      <FloatingMetric
-        className="right-0 top-[48%]"
-        value="99.9%"
-        label="Reliability"
-      />
     </div>
   );
 }
@@ -706,7 +708,7 @@ function OrbitNode({
 
   return (
     <div
-      className={`absolute ${className} hidden items-center gap-2 rounded-xl border px-3 py-2 shadow-xl backdrop-blur-xl sm:flex ${accents[accent]}`}
+      className={`absolute ${className} flex items-center gap-2 rounded-xl border px-3 py-2 shadow-xl backdrop-blur-xl ${accents[accent]}`}
     >
       <Icon size={17} />
       <span className="text-xs font-semibold">{label}</span>
@@ -725,7 +727,7 @@ function FloatingMetric({
 }) {
   return (
     <div
-      className={`absolute z-40 ${className} hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]/85 px-4 py-3 shadow-2xl backdrop-blur-xl sm:block`}
+      className={`absolute z-40 ${className} rounded-2xl border border-[var(--border)] bg-[var(--surface)]/85 px-4 py-3 shadow-2xl backdrop-blur-xl`}
     >
       <p className="text-lg font-bold text-cyan-400">{value}</p>
       <p className="mt-0.5 text-[10px] uppercase tracking-wider text-[var(--muted)]">

@@ -316,12 +316,8 @@ button {
 }
 
 @media (max-width: 640px) {
-  .orbit-slow {
-    transform: translate(-50%, -50%) scale(0.78);
-  }
-
-  .orbit-reverse {
-    transform: translate(-50%, -50%) scale(0.8);
+  .infra-orbit-scale {
+    transform: scale(0.7);
   }
 }
 @media (prefers-reduced-motion: reduce) {
