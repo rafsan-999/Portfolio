@@ -15,12 +15,13 @@ export const metadata: Metadata = {
     "CI/CD",
     "DevSecOps",
   ],
-  authors: [{ name: "Your Name" }],
+  authors: [{ name: "MD. Rafsan Jamil" }],
   openGraph: {
-    title: "Your Name | DevOps Engineer",
+    title: "MD. Rafsan Jamil | DevOps & Cloud Engineer",
     description:
       "I build reliable platforms, automate deployments and operate production infrastructure.",
     type: "website",
+    images: ["/profile.png"],
   },
 };
 

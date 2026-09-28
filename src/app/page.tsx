@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { IconType } from "react-icons";
 
 import {
@@ -27,10 +27,8 @@ import {
   FiMonitor,
   FiMoon,
   FiServer,
-  FiSettings,
   FiShield,
   FiSun,
-  FiTerminal,
   FiTool,
   FiX,
   FiZap,
@@ -71,8 +69,8 @@ const navigation = [
 ];
 
 const focusAreas = [
-  { value: "Docker", label: "Containerisation" },
-  { value: "Kubernetes", label: "Container platforms" },
+  { value: "Kubernetes", label: "Container Orchestration" },
+  { value: "Docker", label: "Container platforms" },
   { value: "CI/CD", label: "Delivery automation" },
   { value: "DevSecOps", label: "Secure pipelines" },
   { value: "Observability", label: "Monitoring and logs" },
@@ -239,12 +237,12 @@ const experience = [
     responsibilities: [
       "Manage Kubernetes workloads across Development, UAT, and Production Grade environments in on-premises clusters, Azure Kubernetes Service (AKS), and Amazon Elastic Kubernetes Service (EKS).",
       "Manage and support secure, scalable, and highly available On-prem + Cloud infrastructure across Microsoft Azure, AWS, and Oracle Cloud Infrastructure (OCI)",
-      "Build and maintain CI/CD pipelines using Azure DevOps, Argo CD and GitHub Action.",
+      "Build and maintain CI/CD pipelines using Azure DevOps, Argo CD and GitHub Actions.",
       "Containerise applications using Docker, multi-stage builds, image optimisation, vulnerability scanning, and production-focused build practices.",
       "Configure and maintain NGINX & Apache reverse proxies, Kubernetes ingress controllers, Gateway API, load balancers, DNS records, and TLS/SSL certificates.",
       "Investigate and resolve deployment, networking, Kubernetes, cloud infrastructure, database, and application-level incidents.",
       "Optimise MSSQL, PostgreSQL, and MySQL, databases through resource tuning, connection management, and performance monitoring",
-      "Design and maintain automated database backup processes, including backup validation, automated backups with scheduled retention policies,.",
+      "Design and maintain automated database backup processes, including backup validation, automated backups with scheduled retention policies.",
       "For Monitoring Logging I used Prometheus, Grafana, Elasticsearch, and Kibana for application monitoring, metrics visualisation, centralised log management, and incident analysis.",
       "Played a key role in ISO/IEC 27001 ISMS implementation and the successful Year-1 surveillance audit across Kubernetes, Azure cloud services, NGINX Ingress, and on-premises infrastructure",
     ],
@@ -253,16 +251,12 @@ const experience = [
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
-
-  useEffect(() => {
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "dark";
     const savedTheme = window.localStorage.getItem("portfolio-theme") as Theme | null;
-
-    if (savedTheme && themes.some((item) => item.value === savedTheme)) {
-      setTheme(savedTheme);
-    }
-  }, []);
+    return savedTheme && themes.some((item) => item.value === savedTheme) ? savedTheme : "dark";
+  });
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
 
   const changeTheme = (nextTheme: Theme) => {
     setTheme(nextTheme);
@@ -352,7 +346,7 @@ function Header({
           ))}
           <a
             href="#contact"
-            className="rounded-xl bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-cyan-300"
+            className="theme-nav-link text-sm transition"
           >
             Contact
           </a>
@@ -485,7 +479,7 @@ function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen scroll-mt-24 overflow-hidden px-5 pb-24 pt-[86px] sm:px-6"
+      className="relative min-h-screen scroll-mt-24 overflow-hidden px-5 pb-12 pt-[86px] sm:px-6 sm:pb-14"
     >
       <div className="page-grid absolute inset-0 opacity-40" />
 
@@ -509,7 +503,7 @@ function Hero() {
           </p>
 
           <h1 className="mt-6 max-w-3xl text-2xl font-black leading-tight tracking-tight">
-            I Engineer The Systems
+            I Engineer Systems
             <span className="mt-2 block bg-gradient-to-r from-cyan-400 via-blue-400 to-violet-500 bg-clip-text text-transparent">
               Behind Reliable Products.
             </span>
@@ -751,7 +745,7 @@ function DeploymentTicker() {
   ];
 
   return (
-    <div className="relative mx-auto mt-10 max-w-7xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] backdrop-blur-xl">
+    <div className="relative mx-auto mt-10 max-w-7xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] backdrop-blur-xl lg:-mt-24">
       <div className="flex min-w-max animate-ticker items-center">
         {[...entries, ...entries].map((entry, index) => (
           <div
@@ -789,82 +783,6 @@ function SocialLink({
     </a>
   );
 }
-function TerminalPanel() {
-  return (
-    <div className="relative animate-rise-delayed">
-      <div className="absolute -inset-8 rounded-full bg-cyan-500/5 blur-3xl" />
-      <div className="terminal-shadow relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/90">
-        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-          <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-red-400" />
-            <span className="h-3 w-3 rounded-full bg-yellow-400" />
-            <span className="h-3 w-3 rounded-full bg-green-400" />
-          </div>
-          <div className="flex items-center gap-2 font-mono text-xs text-slate-500">
-            <FiTerminal size={14} />
-            infrastructure.ps1
-          </div>
-        </div>
-
-        <div className="space-y-7 p-6 font-mono text-sm leading-7 sm:p-8">
-          <TerminalCommand command="kubectl get nodes">
-            <div className="mt-2 text-slate-500">
-              <p>NAME STATUS ROLE</p>
-              <p>
-                control-plane <span className="text-emerald-400">Ready</span> control-plane
-              </p>
-              <p>
-                worker-01 <span className="text-emerald-400">Ready</span> worker
-              </p>
-              <p>
-                worker-02 <span className="text-emerald-400">Ready</span> worker
-              </p>
-            </div>
-          </TerminalCommand>
-
-          <TerminalCommand command="terraform apply --auto-approve">
-            <p className="mt-2 text-emerald-400">Apply complete! Infrastructure is ready ✓</p>
-          </TerminalCommand>
-
-          <TerminalCommand command="az pipelines run --name production">
-            <p className="mt-2 text-emerald-400">Pipeline completed successfully ✓</p>
-          </TerminalCommand>
-
-          <p className="animate-pulse text-cyan-400">PS&gt; _</p>
-        </div>
-      </div>
-
-      <div className="absolute -bottom-5 -left-5 hidden items-center gap-3 rounded-xl border border-white/10 bg-slate-900/95 px-4 py-3 shadow-2xl md:flex">
-        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400">
-          <FiCheckCircle size={19} />
-        </span>
-        <div>
-          <p className="text-xs text-slate-500">Platform status</p>
-          <p className="text-sm font-semibold text-emerald-400">All systems operational</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function TerminalCommand({
-  command,
-  children,
-}: {
-  command: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <p>
-        <span className="text-cyan-400">PS&gt;</span>{" "}
-        <span className="text-slate-100">{command}</span>
-      </p>
-      {children}
-    </div>
-  );
-}
-
 function FocusStrip() {
   return (
     <section className="border-y border-white/10 bg-white/[0.025] px-5 sm:px-6">
@@ -885,7 +803,7 @@ function FocusStrip() {
 
 function About() {
   return (
-    <section id="about" className="scroll-mt-24 px-5 py-24 sm:px-6 sm:py-28">
+    <section id="about" className="scroll-mt-24 px-5 pb-12 pt-12 sm:px-6 sm:pb-14 sm:pt-14">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="About me"
@@ -946,7 +864,7 @@ function Skills() {
   return (
     <section
       id="skills"
-      className="scroll-mt-24 border-y border-white/10 bg-white/[0.02] px-5 py-24 sm:px-6 sm:py-28"
+      className="scroll-mt-24 border-y border-white/10 bg-white/[0.02] px-5 pb-12 pt-12 sm:px-6 sm:pb-14 sm:pt-14"
     >
       <div className="mx-auto max-w-7xl">
         <SectionHeading
@@ -990,7 +908,7 @@ function Skills() {
 
 function Projects() {
   return (
-    <section id="projects" className="scroll-mt-24 px-5 py-24 sm:px-6 sm:py-28">
+    <section id="projects" className="scroll-mt-24 px-5 pb-12 pt-12 sm:px-6 sm:pb-14 sm:pt-14">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Featured work"
@@ -1063,7 +981,7 @@ function Experience() {
   return (
     <section
       id="experience"
-      className="scroll-mt-24 border-y border-white/10 bg-white/[0.02] px-5 py-24 sm:px-6 sm:py-28"
+      className="scroll-mt-24 border-y border-white/10 bg-white/[0.02] px-5 pb-12 pt-12 sm:px-6 sm:pb-14 sm:pt-14"
     >
       <div className="mx-auto max-w-7xl">
         <SectionHeading
@@ -1120,30 +1038,30 @@ function Experience() {
 
 function Contact() {
   return (
-    <section id="contact" className="scroll-mt-24 px-5 py-24 sm:px-6 sm:py-28">
-      <div className="mx-auto max-w-5xl">
-        <div className="relative overflow-hidden rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-cyan-400/[0.09] via-slate-900/60 to-blue-500/[0.06] px-7 py-14 text-center sm:px-12 sm:py-16">
+    <section id="contact" className="scroll-mt-24 px-5 pb-12 pt-12 sm:px-6 sm:pb-14 sm:pt-14">
+      <div className="mx-auto max-w-3xl">
+        <div className="relative overflow-hidden rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-cyan-400/[0.09] via-slate-900/60 to-blue-500/[0.06] px-6 py-10 text-center sm:px-10 sm:py-12">
           <div className="absolute left-1/2 top-0 h-52 w-52 -translate-x-1/2 rounded-full bg-cyan-400/10 blur-[100px]" />
           <div className="relative">
-            <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-400 text-slate-950">
-              <FiMail size={26} />
+            <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-400 text-slate-950">
+              <FiMail size={22} />
             </span>
-            <p className="mt-7 font-mono text-sm uppercase tracking-[0.3em] text-cyan-400">Get in touch</p>
-            <h2 className="mx-auto mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
+            <p className="mt-5 font-mono text-sm uppercase tracking-[0.3em] text-cyan-400">Get in touch</p>
+            <h2 className="mx-auto mt-3 max-w-3xl text-xl font-bold tracking-tight sm:text-2xl">
               Let&apos;s Build Reliable & Secure Systems Together
             </h2>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-400">
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-400">
               Reach out for DevOps, cloud infrastructure, Kubernetes, CI/CD or platform engineering opportunities.
             </p>
 
-            <div className="mt-9 flex flex-wrap justify-center gap-4">
+            <div className="mt-7 flex flex-wrap justify-center gap-3">
               <a
                 href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
                   profile.email
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-6 py-3.5 font-semibold text-slate-950 transition hover:-translate-y-1 hover:bg-cyan-300"
+                className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 transition hover:-translate-y-1 hover:bg-cyan-300"
               >
                 <FiMail size={18} />
                 Send an email
@@ -1152,14 +1070,14 @@ function Contact() {
                 href={profile.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.03] px-6 py-3.5 font-semibold transition hover:-translate-y-1 hover:border-cyan-400 hover:text-cyan-400"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.03] px-5 py-3 font-semibold transition hover:-translate-y-1 hover:border-cyan-400 hover:text-cyan-400"
               >
                 <FiLinkedin size={18} />
                 LinkedIn
               </a>
             </div>
 
-            <p className="mt-8 inline-flex items-center gap-2 text-sm text-slate-500">
+            <p className="mt-6 inline-flex items-center gap-2 text-sm text-slate-500">
               <FiMapPin size={16} />
               {profile.location}
             </p>
@@ -1198,7 +1116,7 @@ function SectionHeading({
   return (
     <div className="max-w-3xl">
       <p className="font-mono text-sm uppercase tracking-[0.3em] text-cyan-400">{eyebrow}</p>
-      <h2 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">{title}</h2>
+      <h2 className="mt-4 text-xl font-bold tracking-tight sm:text-2xl">{title}</h2>
       <p className="mt-5 text-lg leading-8 text-slate-400">{description}</p>
     </div>
   );
