@@ -988,8 +988,8 @@ function Experience() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Professional journey"
-          title="3+ Years of Experience"
-          description="DevOps & Cloud Engineer with 3+ years of experience building secure, scalable, and highly available infrastructure across cloud and on-premises environments. Skilled in Docker, Kubernetes, CI/CD automation, and Terraform, with hands-on expertise in AWS, Azure, and OCI. Contributed to ISO/IEC 27001:2022 ISMS implementation and surveillance audits by aligning cloud, Kubernetes, and infrastructure security controls with compliance requirements."
+          title="3.5+ Years of Experience"
+          description="DevOps & Cloud Engineer with 3.5+ years of experience building secure, scalable, and highly available infrastructure across cloud and on-premises environments. Skilled in Docker, Kubernetes, CI/CD automation, and Terraform, with hands-on expertise in AWS, Azure, and OCI. Contributed to ISO/IEC 27001:2022 ISMS implementation and surveillance audits by aligning cloud, Kubernetes, and infrastructure security controls with compliance requirements."
         />
 
         <div className="mt-14">
