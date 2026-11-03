@@ -810,7 +810,7 @@ function About() {
         <SectionHeading
           eyebrow="About me"
           title="DevOps & Cloud Engineer"
-          description="Hi, This is Md. Rafsan Jamil, I am a DevOps and Cloud Engineer with 3+ years of experience building secure, scalable, reliable, and highly available infrastructure across cloud and on-premises environments.I have managed and configured up to six production Azure Kubernetes Service clusters, supporting more than 300 applications. My expertise includes Kubernetes, Docker, CI/CD automation, Terraform, Linux, monitoring, and cloud platforms such as AWS, Azure, and OCI.I focus on automating deployments, improving system reliability, strengthening infrastructure security, and building resilient platforms that scale with business needs."
+          description="Hi, This is Md. Rafsan Jamil, I am a DevOps and Cloud Engineer with 3.5+ years of experience building secure, scalable, reliable, and highly available infrastructure across cloud and on-premises environments.I have managed and configured up to six production Azure Kubernetes Service clusters, supporting more than 300 applications. My expertise includes Kubernetes, Docker, CI/CD automation, Terraform, Linux, monitoring, and cloud platforms such as AWS, Azure, and OCI.I focus on automating deployments, improving system reliability, strengthening infrastructure security, and building resilient platforms that scale with business needs."
         />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
